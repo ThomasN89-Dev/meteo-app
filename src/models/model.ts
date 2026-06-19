@@ -2,6 +2,14 @@ export interface WeatherData {
   location: string;
   temperature: number;
   time: string;
+  humidity: number;
+  windSpeed: number;
+}
+
+export interface WeatherUnitData {
+  temperature: string;
+  humidity: string;
+  windSpeed: string;
 }
 
 export interface searchBarProps {

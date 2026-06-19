@@ -7,7 +7,7 @@ import Header from "./components/custom/Header";
 
 function App() {
   const [searchLocation, setSearchLocation] = useState<string>("");
-  const { weather } = useWeather(searchLocation);
+  const { weather, weatherUnits } = useWeather(searchLocation);
 
   console.log(weather);
 
@@ -21,7 +21,11 @@ function App() {
       <div>
         <SearchBar onSearch={handleSearch} />
       </div>
-      {weather ? <MeteoCard weatherData={weather} /> : <p>Caricamento...</p>}
+      {weather && weatherUnits ? (
+        <MeteoCard weatherData={weather} weatherUnits={weatherUnits} />
+      ) : (
+        <p>Caricamento...</p>
+      )}
     </div>
   );
 }
