@@ -12,7 +12,7 @@ function App() {
   console.log(weather);
 
   const handleSearch = (location: string) => {
-    setSearchLocation(location);
+    setSearchLocation(location.trim());
   };
 
   return (
