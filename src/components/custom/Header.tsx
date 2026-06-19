@@ -38,7 +38,7 @@ function Header({ title }: HeaderProps) {
         />
         <FieldLabel
           htmlFor="switch-theme"
-          className={theme === "dark" ? "opacity-0" : ""}
+          className={theme === "dark" ? "hidden" : ""}
         >
           Modalità scura
         </FieldLabel>
