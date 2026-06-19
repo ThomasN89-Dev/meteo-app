@@ -32,6 +32,7 @@ const useWeather = (searchLocation: string) => {
         time: weatherData.time,
         humidity: weatherData.relative_humidity_2m,
         windSpeed: weatherData.wind_speed_10m,
+        wmoCode: weatherData.weather_code,
       });
 
       setWeatherUnits({

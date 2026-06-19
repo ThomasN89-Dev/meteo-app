@@ -4,6 +4,7 @@ export interface WeatherData {
   time: string;
   humidity: number;
   windSpeed: number;
+  wmoCode: number;
 }
 
 export interface WeatherUnitData {
