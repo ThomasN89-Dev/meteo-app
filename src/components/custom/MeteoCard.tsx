@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 function MeteoCard({ weatherData }: { weatherData: WeatherData }) {
   const parseData = dayjs(weatherData.time).format("DD/MM/YYYY");
   return (
-    <Card>
+    <Card className="w-full max-w-96">
       <CardTitle>{weatherData.location}</CardTitle>
       <CardContent>
         <p>{weatherData.temperature}</p>

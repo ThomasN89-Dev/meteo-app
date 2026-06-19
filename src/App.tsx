@@ -16,7 +16,7 @@ function App() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center bg-accent px-8">
+    <div className="w-full min-h-screen flex flex-col items-center bg-accent px-6">
       <Header title="Meteo app" />
       <div>
         <SearchBar onSearch={handleSearch} />
