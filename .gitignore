@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project docs
+CLAUDE.md
+PLAN.md
+recap.md
