@@ -13,6 +13,13 @@ export interface WeatherUnitData {
   windSpeed: string;
 }
 
+export interface DailyWeather {
+  tempMin: number;
+  tempMax: number;
+  wmoCode: number;
+  time: string;
+}
+
 export interface searchBarProps {
   onSearch: (location: string) => void;
 }

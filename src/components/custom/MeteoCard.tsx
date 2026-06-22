@@ -1,15 +1,7 @@
 import type { WeatherData, WeatherUnitData } from "@/models/model";
 import { Card, CardContent, CardTitle } from "../ui/card";
 import dayjs from "dayjs";
-import type { ReactNode } from "react";
-import {
-  CloudFog,
-  CloudLightning,
-  CloudRain,
-  CloudSnow,
-  CloudyIcon,
-  SunIcon,
-} from "lucide-react";
+import { wmoDescription } from "@/lib/weatherUtils";
 
 function MeteoCard({
   weatherData,
@@ -20,23 +12,8 @@ function MeteoCard({
 }) {
   const parseData = dayjs(weatherData.time).format("DD/MM/YYYY HH:mm");
 
-  const wmoDescription: Record<number, ReactNode> = {
-    0: <SunIcon />,
-    1: <CloudyIcon />,
-    2: <CloudyIcon />,
-    3: <CloudyIcon />,
-    45: <CloudFog />,
-    48: <CloudFog />,
-    61: <CloudRain />,
-    63: <CloudRain />,
-    65: <CloudRain />,
-    71: <CloudSnow />,
-    73: <CloudSnow />,
-    75: <CloudSnow />,
-    95: <CloudLightning />,
-  };
   return (
-    <Card className="w-full max-w-96 p-4 flex flex-col items-center">
+    <Card className="w-full max-w-96 p-4 flex flex-col items-center my-8">
       <CardTitle className="flex justify-between w-full">
         <h2>{weatherData.location}</h2>{" "}
         <h2>{wmoDescription[weatherData.wmoCode]}</h2>
