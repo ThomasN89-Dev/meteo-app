@@ -5,7 +5,7 @@ import type {
   HourlyWeather,
 } from "@/models/model";
 import { useEffect, useState } from "react";
-import useGeoLocation from "./useGeoLocation";
+import useGeoLocation from "./useGeolocation";
 
 const useWeather = (searchLocation: string) => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
