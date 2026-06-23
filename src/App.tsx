@@ -6,10 +6,11 @@ import MeteoCard from "./components/custom/MeteoCard";
 import Header from "./components/custom/Header";
 import ForecastContainer from "./components/custom/ForecastContainer";
 import HourlyForecastContainer from "./components/custom/HourlyForecastContainer";
+import Loader from "./components/custom/Loader";
 
 function App() {
   const [searchLocation, setSearchLocation] = useState<string>("");
-  const { weather, weatherUnits, dailyWeather, hourlyWeather } =
+  const { weather, weatherUnits, dailyWeather, hourlyWeather, isLoading } =
     useWeather(searchLocation);
 
   const handleSearch = (location: string) => {
@@ -23,15 +24,18 @@ function App() {
         <div>
           <SearchBar onSearch={handleSearch} />
         </div>
-        {weather && weatherUnits ? (
-          <MeteoCard weatherData={weather} weatherUnits={weatherUnits} />
-        ) : (
-          <p>Scegli una località...</p>
+        {isLoading && <Loader />}
+        {!isLoading && (
+          <>
+            {weather && weatherUnits && (
+              <MeteoCard weatherData={weather} weatherUnits={weatherUnits} />
+            )}
+            {hourlyWeather && (
+              <HourlyForecastContainer hourlyForecast={hourlyWeather} />
+            )}
+            {dailyWeather && <ForecastContainer forecast={dailyWeather} />}
+          </>
         )}
-        {hourlyWeather && (
-          <HourlyForecastContainer hourlyForecast={hourlyWeather} />
-        )}
-        {dailyWeather && <ForecastContainer forecast={dailyWeather} />}
       </div>
     </>
   );

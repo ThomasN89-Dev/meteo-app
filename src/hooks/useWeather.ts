@@ -5,6 +5,7 @@ import type {
   HourlyWeather,
 } from "@/models/model";
 import { useEffect, useState } from "react";
+import useGeoLocation from "./useGeoLocation";
 
 const useWeather = (searchLocation: string) => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -15,19 +16,35 @@ const useWeather = (searchLocation: string) => {
   const [hourlyWeather, setHourlyWeather] = useState<HourlyWeather[] | null>(
     null,
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { coordinates, isLoading: isGeoLoading } = useGeoLocation();
 
   useEffect(() => {
     const fetchWeather = async () => {
-      if (searchLocation === null || searchLocation === "") {
+      setIsLoading(true);
+      let latitude;
+      let longitude;
+      let location;
+      if (searchLocation !== null && searchLocation !== "") {
+        const geoCodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${searchLocation}&count=10&language=it&format=json`;
+        const geoResponse = await fetch(geoCodingUrl);
+        const geoData = await geoResponse.json();
+
+        location = geoData.results[0].name;
+        latitude = geoData.results[0].latitude;
+        longitude = geoData.results[0].longitude;
+      } else if (coordinates) {
+        const placeUrl = `https://nominatim.openstreetmap.org/reverse?lat=${coordinates.latitude}&lon=${coordinates.longitude}&format=json`;
+        const placeResponse = await fetch(placeUrl);
+        const placeData = await placeResponse.json();
+
+        latitude = coordinates.latitude;
+        longitude = coordinates.longitude;
+        location = placeData.address.town;
+      } else {
+        setIsLoading(false);
         return;
       }
-      const geoCodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${searchLocation}&count=10&language=it&format=json`;
-      const geoResponse = await fetch(geoCodingUrl);
-      const geoData = await geoResponse.json();
-
-      const location = geoData.results[0].name;
-      const latitude = geoData.results[0].latitude;
-      const longitude = geoData.results[0].longitude;
 
       const meteoUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m&timezone=auto&daily=temperature_2m_max,temperature_2m_min,weather_code&hourly=weather_code,temperature_2m`;
       const response = await fetch(meteoUrl);
@@ -68,12 +85,13 @@ const useWeather = (searchLocation: string) => {
       }));
       const hourly24 = hourlyForecast.slice(0, 24);
       setHourlyWeather(hourly24);
+      setIsLoading(false);
     };
 
     fetchWeather();
-  }, [searchLocation]);
+  }, [coordinates, searchLocation]);
 
-  return { weather, weatherUnits, dailyWeather, hourlyWeather };
+  return { weather, weatherUnits, dailyWeather, hourlyWeather, isLoading: isLoading || isGeoLoading };
 };
 
 export default useWeather;
