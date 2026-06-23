@@ -34,6 +34,7 @@ function Header({ title }: HeaderProps) {
         </FieldLabel>
         <Switch
           id="switch-theme"
+          className="data-unchecked:bg-background/30 data-checked:bg-background/50 [&_[data-slot=switch-thumb]]:bg-background"
           onCheckedChange={() => dispatch({ type: "TOGGLE_THEME" })}
         />
         <FieldLabel
