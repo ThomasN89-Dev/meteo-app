@@ -27,7 +27,7 @@ function reducer(state: ThemeState, action: ThemeActionType): ThemeState {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, {
-    theme: "light",
+    theme: "dark",
   });
 
   return (

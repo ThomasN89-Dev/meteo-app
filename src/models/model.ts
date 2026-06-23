@@ -20,6 +20,12 @@ export interface DailyWeather {
   time: string;
 }
 
+export interface HourlyWeather {
+  time: string;
+  temperature: number;
+  wmoCode: number;
+}
+
 export interface searchBarProps {
   onSearch: (location: string) => void;
 }

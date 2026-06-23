@@ -9,10 +9,14 @@ function ForecastCard({
   forecastCardProps: DailyWeather;
 }) {
   const parseTime = dayjs(forecastCardProps.time).format("DD/MM/YYYY");
+  const parseDay = dayjs(forecastCardProps.time).format("dddd");
   return (
     <Card className="w-full ">
       <CardTitle className="flex items-center justify-between px-6 py-3">
-        <p className="flex-1">{parseTime}</p>
+        <div className="flex-1">
+          <p>{parseTime}</p>
+          <p>{parseDay}</p>
+        </div>
         <p className="flex-1 flex justify-center">
           {wmoDescription[forecastCardProps.wmoCode]}
         </p>

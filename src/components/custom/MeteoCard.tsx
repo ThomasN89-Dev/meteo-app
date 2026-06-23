@@ -10,12 +10,12 @@ function MeteoCard({
   weatherData: WeatherData;
   weatherUnits: WeatherUnitData;
 }) {
-  const parseData = dayjs(weatherData.time).format("DD/MM/YYYY HH:mm");
+  const parseData = dayjs(weatherData.time).format("dddd DD/MM/YYYY HH:mm");
 
   return (
     <Card className="w-full max-w-96 p-4 flex flex-col items-center my-8">
       <CardTitle className="flex justify-between w-full">
-        <h2>{weatherData.location}</h2>{" "}
+        <h2>{weatherData.location}</h2>
         <h2>{wmoDescription[weatherData.wmoCode]}</h2>
       </CardTitle>
       <CardContent>

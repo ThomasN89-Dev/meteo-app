@@ -5,10 +5,12 @@ import useWeather from "./hooks/useWeather";
 import MeteoCard from "./components/custom/MeteoCard";
 import Header from "./components/custom/Header";
 import ForecastContainer from "./components/custom/ForecastContainer";
+import HourlyForecastContainer from "./components/custom/HourlyForecastContainer";
 
 function App() {
   const [searchLocation, setSearchLocation] = useState<string>("");
-  const { weather, weatherUnits, dailyWeather } = useWeather(searchLocation);
+  const { weather, weatherUnits, dailyWeather, hourlyWeather } =
+    useWeather(searchLocation);
 
   const handleSearch = (location: string) => {
     setSearchLocation(location.trim());
@@ -25,6 +27,9 @@ function App() {
           <MeteoCard weatherData={weather} weatherUnits={weatherUnits} />
         ) : (
           <p>Scegli una località...</p>
+        )}
+        {hourlyWeather && (
+          <HourlyForecastContainer hourlyForecast={hourlyWeather} />
         )}
         {dailyWeather && <ForecastContainer forecast={dailyWeather} />}
       </div>
