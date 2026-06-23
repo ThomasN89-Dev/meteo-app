@@ -10,12 +10,14 @@ function ForecastCard({
 }) {
   const parseTime = dayjs(forecastCardProps.time).format("DD/MM/YYYY");
   const parseDay = dayjs(forecastCardProps.time).format("dddd");
+
+  const capitalizedDay = parseDay.charAt(0).toUpperCase() + parseDay.slice(1);
   return (
     <Card className="w-full ">
       <CardTitle className="flex items-center justify-between px-6 py-3">
         <div className="flex-1">
           <p>{parseTime}</p>
-          <p>{parseDay}</p>
+          <p>{capitalizedDay}</p>
         </div>
         <p className="flex-1 flex justify-center">
           {wmoDescription[forecastCardProps.wmoCode]}
