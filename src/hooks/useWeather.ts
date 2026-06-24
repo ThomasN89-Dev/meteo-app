@@ -1,8 +1,9 @@
-import type {
-  WeatherData,
-  WeatherUnitData,
-  DailyWeather,
-  HourlyWeather,
+import {
+  type WeatherData,
+  type WeatherUnitData,
+  type DailyWeather,
+  type HourlyWeather,
+  type FavoriteModel,
 } from "@/models/model";
 import { useEffect, useState } from "react";
 import useGeoLocation from "./useGeolocation";
@@ -16,11 +17,16 @@ const useWeather = (searchLocation: string) => {
   const [hourlyWeather, setHourlyWeather] = useState<HourlyWeather[] | null>(
     null,
   );
+  const [favoriteLocation, setFavoriteLocation] =
+    useState<FavoriteModel | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { coordinates, isLoading: isGeoLoading } = useGeoLocation();
+  const { coordinates, isLoading: isGeoLoading } = useGeoLocation(searchLocation !== "");
 
   useEffect(() => {
     const fetchWeather = async () => {
+      if (searchLocation === "" && isGeoLoading) {
+        return;
+      }
       setIsLoading(true);
       let latitude;
       let longitude;
@@ -85,13 +91,25 @@ const useWeather = (searchLocation: string) => {
       }));
       const hourly24 = hourlyForecast.slice(0, 24);
       setHourlyWeather(hourly24);
+      setFavoriteLocation({
+        location: location,
+        latitude: latitude,
+        longitude: longitude,
+      });
       setIsLoading(false);
     };
 
     fetchWeather();
-  }, [coordinates, searchLocation]);
+  }, [coordinates, isGeoLoading, searchLocation]);
 
-  return { weather, weatherUnits, dailyWeather, hourlyWeather, isLoading: isLoading || isGeoLoading };
+  return {
+    weather,
+    weatherUnits,
+    dailyWeather,
+    hourlyWeather,
+    favoriteLocation,
+    isLoading: isLoading || isGeoLoading,
+  };
 };
 
 export default useWeather;

@@ -5,9 +5,9 @@ interface Coordinates {
   longitude: number;
 }
 
-const useGeoLocation = () => {
+const useGeoLocation = (skip: boolean = false) => {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(!skip);
 
   function success(pos: GeolocationPosition) {
     const crd = pos.coords;
@@ -25,8 +25,9 @@ const useGeoLocation = () => {
   }
 
   useEffect(() => {
+    if (skip) return;
     navigator.geolocation.getCurrentPosition(success, error);
-  }, []);
+  }, [skip]);
 
   return { coordinates, isLoading };
 };

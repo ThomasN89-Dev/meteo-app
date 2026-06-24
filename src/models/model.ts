@@ -26,6 +26,18 @@ export interface HourlyWeather {
   wmoCode: number;
 }
 
+export interface FavoriteModel {
+  latitude: number;
+  longitude: number;
+  location: string;
+}
+
+export interface FavoriteCardProps {
+  location: string;
+  navigateLocation: () => void;
+  removeFavorite: () => void;
+}
+
 export interface searchBarProps {
   onSearch: (location: string) => void;
 }

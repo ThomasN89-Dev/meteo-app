@@ -37,6 +37,7 @@ L'app attualmente ha: ricerca città via geocoding Open-Meteo, fetch della tempe
 - **Debounce/autocomplete**: suggerimenti mentre l'utente digita il nome della città
 - **Dark mode**: toggle light/dark (shadcn ha già il supporto via classe `.dark`)
 - **Responsive design**: layout che funziona bene su mobile
+- **Geolocation timeout**: gestire il caso in cui la geolocalizzazione impiega più di 10 secondi (timeout, feedback utente)
 
 ## Fase 7 — Feature avanzate (difficile)
 - **Grafici**: visualizzare temperature con una libreria di charting (es. Recharts, già compatibile con shadcn)
