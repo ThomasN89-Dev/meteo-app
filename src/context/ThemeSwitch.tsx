@@ -18,16 +18,20 @@ const ThemeContext = createContext<ThemeContextType | null>(null);
 
 function reducer(state: ThemeState, action: ThemeActionType): ThemeState {
   switch (action.type) {
-    case "TOGGLE_THEME":
-      return { ...state, theme: state.theme === "dark" ? "light" : "dark" };
+    case "TOGGLE_THEME": {
+      const themeState = state.theme === "dark" ? "light" : "dark";
+      localStorage.setItem("themeState", themeState);
+      return { ...state, theme: themeState };
+    }
     default:
       return state;
   }
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const themeState = localStorage.getItem("themeState") as Themes;
   const [state, dispatch] = useReducer(reducer, {
-    theme: "dark",
+    theme: themeState ? themeState : "dark",
   });
 
   return (

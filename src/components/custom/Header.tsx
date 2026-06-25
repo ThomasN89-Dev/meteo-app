@@ -20,6 +20,10 @@ function Header({ title }: HeaderProps) {
     }
   }, [theme]);
 
+  const handleThemeChange = () => {
+    dispatch({ type: "TOGGLE_THEME" });
+  };
+
   return (
     <div className="w-full flex justify-between items-center py-4 sticky top-0 left-0 h-15 bg-foreground text-background px-6 z-99">
       <div>
@@ -34,8 +38,9 @@ function Header({ title }: HeaderProps) {
         </FieldLabel>
         <Switch
           id="switch-theme"
-          className="data-unchecked:bg-background/30 data-checked:bg-background/50 [&_[data-slot=switch-thumb]]:bg-background"
-          onCheckedChange={() => dispatch({ type: "TOGGLE_THEME" })}
+          className="data-unchecked:bg-background/40 data-checked:bg-background/60 **:data-[slot=switch-thumb]:bg-background dark:data-unchecked:bg-background/40 dark:data-checked:bg-background/60"
+          onCheckedChange={handleThemeChange}
+          checked={theme === "dark" ? false : true}
         />
         <FieldLabel
           htmlFor="switch-theme"
