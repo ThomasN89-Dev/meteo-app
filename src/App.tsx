@@ -5,12 +5,13 @@ import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs";
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const currentTab = location.pathname === "/favorites" ? "favorites" : "currentMeteo";
+  const currentTab =
+    location.pathname === "/favorites" ? "favorites" : "currentMeteo";
 
   return (
     <>
       <Header title="Meteo app" />
-      <Tabs value={currentTab}>
+      <Tabs value={currentTab} className="mt-6">
         <TabsList>
           <TabsTrigger value="currentMeteo" onClick={() => navigate("/")}>
             Meteo

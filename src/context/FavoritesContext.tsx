@@ -26,15 +26,6 @@ function reducer(
 ): FavoriteState {
   switch (action.type) {
     case "ADD_FAVORITE": {
-      if (
-        state.favorites.some(
-          (f) =>
-            f.latitude === action.payload.latitude &&
-            f.longitude === action.payload.longitude,
-        )
-      ) {
-        return state;
-      }
       const newFavorites = [...state.favorites, action.payload];
       localStorage.setItem("favorites", JSON.stringify(newFavorites));
       return {

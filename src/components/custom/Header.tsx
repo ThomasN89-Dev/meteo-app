@@ -21,7 +21,7 @@ function Header({ title }: HeaderProps) {
   }, [theme]);
 
   return (
-    <div className="w-full flex justify-between items-center py-4 mb-6 sticky top-0 left-0 h-15 bg-foreground text-background px-6">
+    <div className="w-full flex justify-between items-center py-4 sticky top-0 left-0 h-15 bg-foreground text-background px-6 z-99">
       <div>
         <h1>{title}</h1>
       </div>

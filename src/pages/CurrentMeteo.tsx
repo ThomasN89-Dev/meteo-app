@@ -8,13 +8,14 @@ import useWeather from "@/hooks/useWeather";
 import type { FavoriteModel } from "@/models/model";
 import { useState } from "react";
 import { useParams } from "react-router";
+import { toast } from "sonner";
 
 function CurrentMeteo() {
   const { location } = useParams();
   const [searchLocation, setSearchLocation] = useState<string>(
     location ? location : "",
   );
-  const { dispatch } = useFavorite();
+  const { dispatch, state } = useFavorite();
   const {
     weather,
     weatherUnits,
@@ -29,7 +30,22 @@ function CurrentMeteo() {
   };
 
   const onAddFavoriteLocation = (favoriteLocation: FavoriteModel) => {
-    dispatch({ type: "ADD_FAVORITE", payload: favoriteLocation });
+    if (
+      state.favorites.some(
+        (f) =>
+          f.latitude === favoriteLocation.latitude &&
+          f.longitude === favoriteLocation.longitude,
+      )
+    ) {
+      return toast(`${favoriteLocation.location} già presente nei preferiti`, {
+        position: "top-center",
+      });
+    } else {
+      dispatch({ type: "ADD_FAVORITE", payload: favoriteLocation });
+      toast(`${favoriteLocation.location} salvato nei preferiti`, {
+        position: "top-center",
+      });
+    }
   };
   return (
     <>

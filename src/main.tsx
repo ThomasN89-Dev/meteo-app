@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/it.js";
 import { FavoriteProvider } from "./context/FavoritesContext.tsx";
 import AppRoutes from "./routes/routes.tsx";
+import { Toaster } from "sonner";
 
 dayjs.locale("it");
 createRoot(document.getElementById("root")!).render(
@@ -13,6 +14,7 @@ createRoot(document.getElementById("root")!).render(
     <FavoriteProvider>
       <StrictMode>
         <AppRoutes />
+        <Toaster />
       </StrictMode>
     </FavoriteProvider>
   </ThemeProvider>,
