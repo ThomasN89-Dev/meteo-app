@@ -39,32 +39,30 @@ const useGeoLocation = (skip: boolean = false) => {
     }
   };
 
-  const options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-  };
-
-  function success(pos: GeolocationPosition) {
-    const crd = pos.coords;
-
-    setCoordinates({
-      latitude: crd.latitude,
-      longitude: crd.longitude,
-    });
-    setIsLoading(false);
-  }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  function error(err: GeolocationPositionError) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-    renderError(err.code);
-    setIsLoading(false);
-  }
-
   useEffect(() => {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+    };
+
+    function success(pos: GeolocationPosition) {
+      const crd = pos.coords;
+
+      setCoordinates({
+        latitude: crd.latitude,
+        longitude: crd.longitude,
+      });
+      setIsLoading(false);
+    }
+
+    function error(err: GeolocationPositionError) {
+      console.warn(`ERROR(${err.code}): ${err.message}`);
+      renderError(err.code);
+      setIsLoading(false);
+    }
     if (skip) return;
     navigator.geolocation.getCurrentPosition(success, error, options);
-  }, [error, skip]);
+  }, [skip]);
 
   return { coordinates, isLoading };
 };
