@@ -13,7 +13,7 @@ function ForecastCard({
 
   const capitalizedDay = parseDay.charAt(0).toUpperCase() + parseDay.slice(1);
   return (
-    <Card className="w-full ">
+    <Card className="w-full backdrop-blur-xl bg-white/60 dark:bg-black/50 border border-white/30 shadow-lg">
       <CardTitle className="flex items-center justify-between px-6 py-3">
         <div className="flex-1">
           <p>{parseTime}</p>

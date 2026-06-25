@@ -5,6 +5,7 @@ import MeteoCard from "@/components/custom/MeteoCard";
 import SearchBar from "@/components/custom/SearchBar";
 import { useFavorite } from "@/context/FavoritesContext";
 import useWeather from "@/hooks/useWeather";
+import { getWeatherBackground } from "@/lib/weatherUtils";
 import type { FavoriteModel } from "@/models/model";
 import { useState } from "react";
 import { useParams } from "react-router";
@@ -47,9 +48,18 @@ function CurrentMeteo() {
       });
     }
   };
+  const backgroundImage = weather
+    ? getWeatherBackground(weather.wmoCode)
+    : undefined;
+
   return (
     <>
-      <div className="w-full min-h-screen flex flex-col items-center bg-accent px-6 pb-10">
+      <div
+        className="w-full min-h-screen flex flex-col items-center px-6 pb-10 bg-accent bg-cover bg-center bg-no-repeat transition-all duration-700"
+        style={
+          backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}
+        }
+      >
         <div>
           <SearchBar onSearch={handleSearch} />
         </div>

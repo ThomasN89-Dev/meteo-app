@@ -14,7 +14,7 @@ function SearchBar({ onSearch }: searchBarProps) {
   };
   return (
     <>
-      <form onSubmit={handleSearch}>
+      <form onSubmit={handleSearch} className="backdrop-blur-xl bg-white/60 dark:bg-black/50 border border-white/30 shadow-lg rounded-lg p-3 mt-4">
         <Field orientation="horizontal">
           <FieldLabel htmlFor="input-field-location" className="font-bold">
             Località
