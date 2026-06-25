@@ -12,7 +12,7 @@ function HourlyForecastContainer({
   return (
     <div className="w-full flex gap-2 overflow-x-auto mb-8">
       {hourlyForecast
-        .filter((day) => dayjs(day.time).hour() >= currentHour)
+        .filter((day) => dayjs(day.time).hour() > currentHour)
         .map((day) => (
           <HourlyForecast hourlyWeatherData={day} key={day.time} />
         ))}

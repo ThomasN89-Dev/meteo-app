@@ -44,6 +44,11 @@ L'app attualmente ha: ricerca città via geocoding Open-Meteo, fetch della tempe
 - **PWA**: service worker per uso offline e installazione su dispositivo
 - **i18n**: supporto multilingua (italiano/inglese)
 
+## Extra — Feature aggiuntive
+- **Meteo sui preferiti**: mostrare la temperatura attuale direttamente nelle FavoriteCard, senza doverci cliccare
+- **Sfondi/colori dinamici**: cambiare il tema colore in base al meteo (azzurro col sole, grigio con pioggia, scuro di notte usando `is_day`)
+- **Storico ricerche**: salvare le ultime ricerche in localStorage per accesso rapido
+
 ---
 
 ## Verifica

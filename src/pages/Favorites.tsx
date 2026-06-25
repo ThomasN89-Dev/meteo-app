@@ -31,6 +31,8 @@ function Favorites() {
             key={`${f.latitude} - ${f.longitude}`}
             navigateLocation={() => navigateToLocation(f.location)}
             removeFavorite={() => removeFavorite(f)}
+            latitude={f.latitude}
+            longitude={f.longitude}
           />
         ))
       )}

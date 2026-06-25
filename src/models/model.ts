@@ -34,6 +34,8 @@ export interface FavoriteModel {
 
 export interface FavoriteCardProps {
   location: string;
+  latitude: number;
+  longitude: number;
   navigateLocation: () => void;
   removeFavorite: () => void;
 }
