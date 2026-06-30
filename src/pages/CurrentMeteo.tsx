@@ -3,7 +3,7 @@ import HourlyForecastContainer from "@/components/custom/HourlyForecastContainer
 import Loader from "@/components/custom/Loader";
 import MeteoCard from "@/components/custom/MeteoCard";
 import SearchBar from "@/components/custom/SearchBar";
-import { useFavorite } from "@/context/FavoritesContext";
+import { useFavoriteStore } from "@/context/FavoriteStore";
 import useGeocoding from "@/hooks/useGeoCoding";
 import useGeoLocation from "@/hooks/useGeolocation";
 import useReverseGeocoding from "@/hooks/useReverseGeocoding";
@@ -19,7 +19,6 @@ function CurrentMeteo() {
   const [searchLocation, setSearchLocation] = useState<string>(
     location ? location : "",
   );
-  const { dispatch, state } = useFavorite();
   const { coordinates } = useGeoLocation(searchLocation !== "");
   const geoCoding = useGeocoding(searchLocation);
   const reverseGeocoding = useReverseGeocoding(coordinates);
@@ -33,20 +32,15 @@ function CurrentMeteo() {
   };
   const isLoading =
     weatherData.isLoading || geoCoding.isLoading || reverseGeocoding.isLoading;
+  const onAddFavorite = useFavoriteStore((state) => state.onAddFavorite);
   const onAddFavoriteLocation = (favoriteLocation: FavoriteModel) => {
-    if (
-      state.favorites.some(
-        (f) =>
-          f.latitude === favoriteLocation.latitude &&
-          f.longitude === favoriteLocation.longitude,
-      )
-    ) {
-      return toast(`${favoriteLocation.location} già presente nei preferiti`, {
+    const added = onAddFavorite(favoriteLocation);
+    if (added) {
+      toast(`${favoriteLocation.location} salvato nei preferiti`, {
         position: "top-center",
       });
     } else {
-      dispatch({ type: "ADD_FAVORITE", payload: favoriteLocation });
-      toast(`${favoriteLocation.location} salvato nei preferiti`, {
+      toast(`${favoriteLocation.location} già presente nei preferiti`, {
         position: "top-center",
       });
     }
