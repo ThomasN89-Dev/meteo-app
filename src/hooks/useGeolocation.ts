@@ -1,10 +1,6 @@
+import type { Coordinates } from "@/models/model";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
-interface Coordinates {
-  latitude: number;
-  longitude: number;
-}
 
 const useGeoLocation = (skip: boolean = false) => {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);

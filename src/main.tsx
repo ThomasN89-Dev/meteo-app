@@ -7,15 +7,20 @@ import "dayjs/locale/it.js";
 import { FavoriteProvider } from "./context/FavoritesContext.tsx";
 import AppRoutes from "./routes/routes.tsx";
 import { Toaster } from "sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 dayjs.locale("it");
 createRoot(document.getElementById("root")!).render(
-  <ThemeProvider>
-    <FavoriteProvider>
-      <StrictMode>
-        <AppRoutes />
-        <Toaster />
-      </StrictMode>
-    </FavoriteProvider>
-  </ThemeProvider>,
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
+      <FavoriteProvider>
+        <StrictMode>
+          <AppRoutes />
+          <Toaster />
+        </StrictMode>
+      </FavoriteProvider>
+    </ThemeProvider>
+  </QueryClientProvider>,
 );

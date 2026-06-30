@@ -4,6 +4,9 @@ import Loader from "@/components/custom/Loader";
 import MeteoCard from "@/components/custom/MeteoCard";
 import SearchBar from "@/components/custom/SearchBar";
 import { useFavorite } from "@/context/FavoritesContext";
+import useGeocoding from "@/hooks/useGeoCoding";
+import useGeoLocation from "@/hooks/useGeolocation";
+import useReverseGeocoding from "@/hooks/useReverseGeocoding";
 import useWeather from "@/hooks/useWeather";
 import { getWeatherBackground } from "@/lib/weatherUtils";
 import type { FavoriteModel } from "@/models/model";
@@ -17,19 +20,19 @@ function CurrentMeteo() {
     location ? location : "",
   );
   const { dispatch, state } = useFavorite();
-  const {
-    weather,
-    weatherUnits,
-    dailyWeather,
-    hourlyWeather,
-    isLoading,
-    favoriteLocation,
-  } = useWeather(searchLocation);
+  const { coordinates } = useGeoLocation(searchLocation !== "");
+  const geoCoding = useGeocoding(searchLocation);
+  const reverseGeocoding = useReverseGeocoding(coordinates);
+  const place =
+    (searchLocation !== "" ? geoCoding.data : reverseGeocoding.data) ?? null;
+  const weatherData = useWeather(place);
+  const weather = weatherData.data;
 
   const handleSearch = (location: string) => {
     setSearchLocation(location.trim());
   };
-
+  const isLoading =
+    weatherData.isLoading || geoCoding.isLoading || reverseGeocoding.isLoading;
   const onAddFavoriteLocation = (favoriteLocation: FavoriteModel) => {
     if (
       state.favorites.some(
@@ -48,8 +51,8 @@ function CurrentMeteo() {
       });
     }
   };
-  const backgroundImage = weather
-    ? getWeatherBackground(weather.wmoCode)
+  const backgroundImage = weather?.weather
+    ? getWeatherBackground(weather?.weather.wmoCode)
     : undefined;
 
   return (
@@ -66,17 +69,19 @@ function CurrentMeteo() {
         {isLoading && <Loader />}
         {!isLoading && (
           <>
-            {weather && weatherUnits && favoriteLocation && (
+            {weather && weather.weatherUnits && place && (
               <MeteoCard
-                weatherData={weather}
-                weatherUnits={weatherUnits}
-                onAddFavorite={() => onAddFavoriteLocation(favoriteLocation)}
+                weatherData={weather.weather}
+                weatherUnits={weather.weatherUnits}
+                onAddFavorite={() => onAddFavoriteLocation(place)}
               />
             )}
-            {hourlyWeather && (
-              <HourlyForecastContainer hourlyForecast={hourlyWeather} />
+            {weather?.hourlyWeather && (
+              <HourlyForecastContainer hourlyForecast={weather.hourlyWeather} />
             )}
-            {dailyWeather && <ForecastContainer forecast={dailyWeather} />}
+            {weather?.dailyWeather && (
+              <ForecastContainer forecast={weather.dailyWeather} />
+            )}
           </>
         )}
       </div>

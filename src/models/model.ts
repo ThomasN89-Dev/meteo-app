@@ -26,6 +26,13 @@ export interface HourlyWeather {
   wmoCode: number;
 }
 
+export interface WeatherDataComplete {
+  weather: WeatherData;
+  weatherUnits: WeatherUnitData;
+  dailyWeather: DailyWeather[];
+  hourlyWeather: HourlyWeather[];
+}
+
 export interface FavoriteModel {
   latitude: number;
   longitude: number;
@@ -42,4 +49,9 @@ export interface FavoriteCardProps {
 
 export interface searchBarProps {
   onSearch: (location: string) => void;
+}
+
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
 }
