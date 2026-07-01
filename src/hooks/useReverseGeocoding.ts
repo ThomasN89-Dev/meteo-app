@@ -24,11 +24,20 @@ const useReverseGeocoding = (coordinates: Coordinates | null) => {
         throw new Error("Impossibile trovare la posizione");
       }
 
+      function getLocation() {
+        if (data.address.village && data.address.town) {
+          return `${data.address.town} (${data.address.village})`;
+        } else if (data.address.village && data.address.city) {
+          return `${data.address.city} (${data.address.village})`;
+        } else {
+          return data.address.village || data.address.town || data.address.city;
+        }
+      }
+
       return {
         latitude: coordinates!.latitude,
         longitude: coordinates!.longitude,
-        location:
-          data.address.city || data.address.town || data.address.village,
+        location: getLocation(),
       };
     },
     enabled: coordinates !== null,
