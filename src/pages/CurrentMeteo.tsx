@@ -4,7 +4,6 @@ import Loader from "@/components/custom/Loader";
 import MeteoCard from "@/components/custom/MeteoCard";
 import SearchBar from "@/components/custom/SearchBar";
 import { useFavoriteStore } from "@/context/FavoriteStore";
-import useGeocoding from "@/hooks/useGeoCoding";
 import useGeoLocation from "@/hooks/useGeolocation";
 import useReverseGeocoding from "@/hooks/useReverseGeocoding";
 import useWeather from "@/hooks/useWeather";
@@ -16,22 +15,16 @@ import { toast } from "sonner";
 
 function CurrentMeteo() {
   const { location } = useParams();
-  const [searchLocation, setSearchLocation] = useState<string>(
-    location ? location : "",
-  );
-  const { coordinates } = useGeoLocation(searchLocation !== "");
-  const geoCoding = useGeocoding(searchLocation);
+  const [searchedPlace, setSearchedPlace] = useState<FavoriteModel | null>(null);
+
+  const { coordinates } = useGeoLocation(!searchedPlace && !location);
   const reverseGeocoding = useReverseGeocoding(coordinates);
-  const place =
-    (searchLocation !== "" ? geoCoding.data : reverseGeocoding.data) ?? null;
+  const place = searchedPlace ?? reverseGeocoding.data ?? null;
   const weatherData = useWeather(place);
   const weather = weatherData.data;
 
-  const handleSearch = (location: string) => {
-    setSearchLocation(location.trim());
-  };
   const isLoading =
-    weatherData.isLoading || geoCoding.isLoading || reverseGeocoding.isLoading;
+    weatherData.isLoading || reverseGeocoding.isLoading;
   const onAddFavorite = useFavoriteStore((state) => state.onAddFavorite);
   const onAddFavoriteLocation = (favoriteLocation: FavoriteModel) => {
     const added = onAddFavorite(favoriteLocation);
@@ -58,7 +51,7 @@ function CurrentMeteo() {
         }
       >
         <div>
-          <SearchBar onSearch={handleSearch} />
+          <SearchBar onLocationFound={setSearchedPlace} defaultSearch={location} />
         </div>
         {isLoading && <Loader />}
         {!isLoading && (

@@ -6,7 +6,9 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const currentTab =
-    location.pathname === "/favorites" ? "favorites" : "currentMeteo";
+    location.pathname === "/"
+      ? "currentMeteo"
+      : location.pathname.slice(1);
 
   return (
     <>
@@ -18,6 +20,12 @@ function App() {
           </TabsTrigger>
           <TabsTrigger value="favorites" onClick={() => navigate("/favorites")}>
             Preferiti
+          </TabsTrigger>
+          <TabsTrigger
+            value="weather-map"
+            onClick={() => navigate("/weather-map")}
+          >
+            Mappa meteorologica
           </TabsTrigger>
         </TabsList>
       </Tabs>

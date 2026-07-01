@@ -48,7 +48,8 @@ export interface FavoriteCardProps {
 }
 
 export interface SearchBarProps {
-  onSearch: (location: string) => void;
+  onLocationFound: (location: FavoriteModel) => void;
+  defaultSearch?: string;
 }
 
 export interface Coordinates {

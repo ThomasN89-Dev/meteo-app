@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Field, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import type { SearchBarProps } from "@/models/model";
+import useGeocoding from "@/hooks/useGeoCoding";
 
-function SearchBar({ onSearch }: SearchBarProps) {
-  const [userInput, setUserInput] = useState<string>("");
+function SearchBar({ onLocationFound, defaultSearch = "" }: SearchBarProps) {
+  const [userInput, setUserInput] = useState<string>(defaultSearch);
+  const [searchLocation, setSearchLocation] = useState<string>(defaultSearch);
+  const geoCoding = useGeocoding(searchLocation);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
-    onSearch(userInput);
+    setSearchLocation(userInput.trim());
   };
+
+  useEffect(() => {
+    if (geoCoding.data) {
+      onLocationFound(geoCoding.data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geoCoding.data]);
+
   return (
     <>
       <form
