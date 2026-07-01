@@ -1,12 +1,14 @@
 import dayjs from "dayjs";
 import { Card, CardTitle } from "../ui/card";
 import type { DailyWeather } from "@/models/model";
-import { wmoDescription } from "@/lib/weatherUtils";
+import { wmoIcons } from "@/lib/weatherUtils";
 
 function ForecastCard({
   forecastCardProps,
+  tempUnit,
 }: {
   forecastCardProps: DailyWeather;
+  tempUnit: string;
 }) {
   const parseTime = dayjs(forecastCardProps.time).format("DD/MM/YYYY");
   const parseDay = dayjs(forecastCardProps.time).format("dddd");
@@ -20,11 +22,15 @@ function ForecastCard({
           <p>{capitalizedDay}</p>
         </div>
         <p className="flex-1 flex justify-center">
-          {wmoDescription[forecastCardProps.wmoCode]}
+          {wmoIcons[forecastCardProps.wmoCode]}
         </p>
         <div className="flex-1">
-          <p>Minima: {forecastCardProps.tempMin} °C</p>
-          <p>Massima: {forecastCardProps.tempMax} °C</p>
+          <p>
+            Minima: {forecastCardProps.tempMin} {tempUnit}
+          </p>
+          <p>
+            Massima: {forecastCardProps.tempMax} {tempUnit}
+          </p>
         </div>
       </CardTitle>
     </Card>

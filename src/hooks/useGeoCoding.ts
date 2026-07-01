@@ -11,7 +11,7 @@ const useGeocoding = (searchLocation: string) => {
   return useQuery<GeocodingResult>({
     queryKey: ["geocoding", searchLocation],
     queryFn: async () => {
-      const url = `https://geocoding-api.open-meteo.com/v1/search?name=${searchLocation}&count=10&language=it&format=json`;
+      const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchLocation)}&count=10&language=it&format=json`;
       const response = await fetch(url);
       const data = await response.json();
 

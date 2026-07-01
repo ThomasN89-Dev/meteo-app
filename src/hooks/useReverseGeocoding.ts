@@ -27,7 +27,8 @@ const useReverseGeocoding = (coordinates: Coordinates | null) => {
       return {
         latitude: coordinates!.latitude,
         longitude: coordinates!.longitude,
-        location: data.address.town,
+        location:
+          data.address.city || data.address.town || data.address.village,
       };
     },
     enabled: coordinates !== null,

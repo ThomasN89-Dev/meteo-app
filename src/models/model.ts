@@ -47,7 +47,7 @@ export interface FavoriteCardProps {
   removeFavorite: () => void;
 }
 
-export interface searchBarProps {
+export interface SearchBarProps {
   onSearch: (location: string) => void;
 }
 

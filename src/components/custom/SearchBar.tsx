@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Field, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import type { searchBarProps } from "@/models/model";
+import type { SearchBarProps } from "@/models/model";
 
-function SearchBar({ onSearch }: searchBarProps) {
+function SearchBar({ onSearch }: SearchBarProps) {
   const [userInput, setUserInput] = useState<string>("");
 
   const handleSearch = (e: React.FormEvent) => {
@@ -14,7 +14,10 @@ function SearchBar({ onSearch }: searchBarProps) {
   };
   return (
     <>
-      <form onSubmit={handleSearch} className="backdrop-blur-xl bg-white/60 dark:bg-black/50 border border-white/30 shadow-lg rounded-lg p-3 mt-4">
+      <form
+        onSubmit={handleSearch}
+        className="backdrop-blur-xl bg-white/60 dark:bg-black/50 border border-white/30 shadow-lg rounded-lg p-3 mt-4"
+      >
         <Field orientation="horizontal">
           <FieldLabel htmlFor="input-field-location" className="font-bold">
             Località

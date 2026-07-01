@@ -1,7 +1,7 @@
 import type { WeatherData, WeatherUnitData } from "@/models/model";
 import { Card, CardContent, CardTitle } from "../ui/card";
 import dayjs from "dayjs";
-import { wmoDescription } from "@/lib/weatherUtils";
+import { wmoIcons } from "@/lib/weatherUtils";
 import { Button } from "../ui/button";
 import { Star } from "lucide-react";
 
@@ -22,7 +22,7 @@ function MeteoCard({
     <Card className="w-full max-w-96 p-4 flex flex-col items-center my-8 backdrop-blur-xl bg-white/60 dark:bg-black/50 border border-white/30 shadow-lg">
       <CardTitle className="flex justify-between w-full">
         <h2>{weatherData.location}</h2>
-        <h2>{wmoDescription[weatherData.wmoCode]}</h2>
+        <h2>{wmoIcons[weatherData.wmoCode]}</h2>
         <Button onClick={onAddFavorite}>
           <Star />
         </Button>

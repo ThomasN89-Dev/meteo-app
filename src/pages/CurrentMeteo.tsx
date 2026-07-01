@@ -73,8 +73,11 @@ function CurrentMeteo() {
             {weather?.hourlyWeather && (
               <HourlyForecastContainer hourlyForecast={weather.hourlyWeather} />
             )}
-            {weather?.dailyWeather && (
-              <ForecastContainer forecast={weather.dailyWeather} />
+            {weather?.dailyWeather && weather?.weatherUnits.temperature && (
+              <ForecastContainer
+                forecast={weather.dailyWeather}
+                tempUnit={weather?.weatherUnits.temperature}
+              />
             )}
           </>
         )}

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 const useWeather = (place: FavoriteModel | null) => {
+  const HOUR = 1000 * 60 * 60;
   return useQuery<WeatherDataComplete>({
     queryKey: ["fetchWeather", place],
     queryFn: async () => {
@@ -58,6 +59,7 @@ const useWeather = (place: FavoriteModel | null) => {
       };
     },
     enabled: place !== null,
+    refetchInterval: HOUR,
   });
 };
 

@@ -10,7 +10,7 @@ import {
   SunIcon,
 } from "lucide-react";
 
-export const wmoDescription: Record<number, ReactNode> = {
+export const wmoIcons: Record<number, ReactNode> = {
   0: <SunIcon />,
   1: <CloudyIcon />,
   2: <CloudyIcon />,
