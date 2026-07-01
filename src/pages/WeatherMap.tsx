@@ -5,10 +5,24 @@ import useGeoLocation from "@/hooks/useGeolocation";
 import useReverseGeocoding from "@/hooks/useReverseGeocoding";
 import useWeather from "@/hooks/useWeather";
 import type { Coordinates, FavoriteModel, WeatherDataComplete } from "@/models/model";
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
 import { useState } from "react";
 import { Marker, Popup, TileLayer } from "react-leaflet";
 import { MapContainer } from "react-leaflet";
 import { useParams } from "react-router";
+
+L.Marker.prototype.options.icon = L.icon({
+  iconUrl: markerIcon,
+  iconRetinaUrl: markerIcon2x,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
 
 function WeatherMap() {
   const { location } = useParams();
