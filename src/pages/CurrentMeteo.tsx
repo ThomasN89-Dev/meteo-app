@@ -17,14 +17,15 @@ function CurrentMeteo() {
   const { location } = useParams();
   const [searchedPlace, setSearchedPlace] = useState<FavoriteModel | null>(null);
 
-  const { coordinates } = useGeoLocation(!searchedPlace && !location);
+  const usingGeolocation = !searchedPlace && !location;
+  const { coordinates } = useGeoLocation(!usingGeolocation);
   const reverseGeocoding = useReverseGeocoding(coordinates);
   const place = searchedPlace ?? reverseGeocoding.data ?? null;
   const weatherData = useWeather(place);
   const weather = weatherData.data;
 
   const isLoading =
-    weatherData.isLoading || reverseGeocoding.isLoading;
+    weatherData.isLoading || (usingGeolocation && reverseGeocoding.isLoading);
   const onAddFavorite = useFavoriteStore((state) => state.onAddFavorite);
   const onAddFavoriteLocation = (favoriteLocation: FavoriteModel) => {
     const added = onAddFavorite(favoriteLocation);
